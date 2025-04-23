@@ -1,16 +1,6 @@
-import {
-  Package,
-  Users,
-  Stethoscope,
-  FileText,
-  User,
-  LayoutDashboard,
-  Folder,
-  History,
-  Microscope,
-  Car,
-  Database,
-} from "lucide-react";
+//file: src/data/menuData.js
+
+import { User, History } from "lucide-react";
 
 const menuCategories = [
   {
