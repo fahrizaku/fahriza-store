@@ -1,3 +1,4 @@
+//file: src/app/supermarket/_components/Navigation.jsx
 "use client";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";

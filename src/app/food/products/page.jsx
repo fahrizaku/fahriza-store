@@ -1,3 +1,4 @@
+//file: src/app/food/products/page.jsx
 "use client";
 import { useState, useEffect } from "react";
 import { Search, SlidersHorizontal, Plus, Minus } from "lucide-react";

@@ -1,168 +1,8 @@
-// File: src/app/supermarket/products/page.jsx
+//file: src/app/supermarket/products/page.jsx
 "use client";
 import { useState, useEffect } from "react";
 import { Search, SlidersHorizontal, Plus, Minus } from "lucide-react";
 import Image from "next/image";
-
-// Data produk supermarket dummy
-const dummyProducts = [
-  {
-    id: 1,
-    name: "Beras Premium 5kg",
-    category: "Bahan Pokok",
-    price: 69500,
-    discountPrice: 62000,
-    rating: 4.8,
-    reviewCount: 235,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 50,
-    unit: "karung",
-  },
-  {
-    id: 2,
-    name: "Minyak Goreng 2L",
-    category: "Bahan Pokok",
-    price: 38000,
-    discountPrice: 34500,
-    rating: 4.7,
-    reviewCount: 186,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 75,
-    unit: "botol",
-  },
-  {
-    id: 3,
-    name: "Telur Ayam 1kg",
-    category: "Bahan Pokok",
-    price: 29000,
-    discountPrice: null,
-    rating: 4.5,
-    reviewCount: 120,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 60,
-    unit: "kg",
-  },
-  {
-    id: 4,
-    name: "Susu UHT Full Cream 1L",
-    category: "Susu & Olahan",
-    price: 18500,
-    discountPrice: 16000,
-    rating: 4.6,
-    reviewCount: 98,
-    image: "/api/placeholder/500/500",
-    isNewArrival: true,
-    stock: 45,
-    unit: "kotak",
-  },
-  {
-    id: 5,
-    name: "Apel Fuji Premium 1kg",
-    category: "Buah & Sayur",
-    price: 45000,
-    discountPrice: 39000,
-    rating: 4.4,
-    reviewCount: 78,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 30,
-    unit: "kg",
-  },
-  {
-    id: 6,
-    name: "Sayur Bayam Organik 250gr",
-    category: "Buah & Sayur",
-    price: 12500,
-    discountPrice: null,
-    rating: 4.3,
-    reviewCount: 56,
-    image: "/api/placeholder/500/500",
-    isNewArrival: true,
-    stock: 20,
-    unit: "ikat",
-  },
-  {
-    id: 7,
-    name: "Daging Sapi Giling 500gr lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatibus.",
-    category: "Daging & Seafood",
-    price: 75000,
-    discountPrice: 69000,
-    rating: 4.7,
-    reviewCount: 65,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 25,
-    unit: "pack",
-  },
-  {
-    id: 8,
-    name: "Udang Segar 500gr",
-    category: "Daging & Seafood",
-    price: 89000,
-    discountPrice: null,
-    rating: 4.8,
-    reviewCount: 42,
-    image: "/api/placeholder/500/500",
-    isNewArrival: true,
-    stock: 15,
-    unit: "pack",
-  },
-  {
-    id: 9,
-    name: "Mie Instan Ayam Bawang (1 dus)",
-    category: "Makanan Instan",
-    price: 110000,
-    discountPrice: 98000,
-    rating: 4.6,
-    reviewCount: 210,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 40,
-    unit: "dus",
-  },
-  {
-    id: 10,
-    name: "Sabun Mandi 450mL",
-    category: "Perawatan Tubuh",
-    price: 32500,
-    discountPrice: 28000,
-    rating: 4.5,
-    reviewCount: 95,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 55,
-    unit: "botol",
-  },
-  {
-    id: 11,
-    name: "Pasta Gigi Whitening 190gr",
-    category: "Perawatan Tubuh",
-    price: 24500,
-    discountPrice: 22000,
-    rating: 4.4,
-    reviewCount: 87,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 65,
-    unit: "tube",
-  },
-  {
-    id: 12,
-    name: "Deterjen Bubuk 1.8kg",
-    category: "Kebersihan",
-    price: 53000,
-    discountPrice: 48500,
-    rating: 4.7,
-    reviewCount: 154,
-    image: "/api/placeholder/500/500",
-    isNewArrival: false,
-    stock: 70,
-    unit: "pack",
-  },
-];
 
 // Fungsi untuk memformat harga
 const formatPrice = (price) => {
@@ -177,20 +17,26 @@ const formatPrice = (price) => {
 // Komponen Filter
 const Filter = ({ onFilterChange }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const categories = [
-    "Semua",
-    "Bahan Pokok",
-    "Buah & Sayur",
-    "Daging & Seafood",
-    "Susu & Olahan",
-    "Makanan Instan",
-    "Perawatan Tubuh",
-    "Kebersihan",
-  ];
+  const [categories, setCategories] = useState(["Semua"]);
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [sortBy, setSortBy] = useState("popularity");
   const [onlyDiscount, setOnlyDiscount] = useState(false);
+
+  // Ambil daftar kategori
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await fetch("/api/categories");
+        const data = await response.json();
+        setCategories(["Semua", ...data.map((cat) => cat.name)]);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+
+    fetchCategories();
+  }, []);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -342,7 +188,7 @@ const Filter = ({ onFilterChange }) => {
   );
 };
 
-// Komponen kartu produk
+// Komponen kartu produk tetap sama
 const ProductCard = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
 
@@ -464,17 +310,21 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Mengambil data dari API
   useEffect(() => {
-    // Simulasi fetching data
-    const fetchProducts = () => {
+    async function fetchProducts() {
       setLoading(true);
-      // Gunakan setTimeout untuk mensimulasikan network delay
-      setTimeout(() => {
-        setProducts(dummyProducts);
-        setFilteredProducts(dummyProducts);
+      try {
+        const response = await fetch("/api/products");
+        const data = await response.json();
+        setProducts(data);
+        setFilteredProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
         setLoading(false);
-      }, 1000);
-    };
+      }
+    }
 
     fetchProducts();
   }, []);
@@ -485,6 +335,7 @@ export default function ProductsPage() {
     sortBy,
     onlyDiscount,
   }) => {
+    setLoading(true);
     let filtered = [...products];
 
     // Filter berdasarkan pencarian
@@ -535,6 +386,7 @@ export default function ProductsPage() {
     }
 
     setFilteredProducts(filtered);
+    setLoading(false);
   };
 
   const handleSearch = (e) => {

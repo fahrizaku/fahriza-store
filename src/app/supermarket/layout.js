@@ -17,20 +17,16 @@ export const metadata = {
     "Temukan berbagai kebutuhan Anda di TokoKita dengan harga terbaik dan pengiriman cepat",
 };
 
-export default function RootLayout({ children }) {
+export default function SupermarketLayout({ children }) {
   return (
-    <html lang="id">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Navigation />
+    <div className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <Navigation />
 
-        {/* Main Content Wrapper with padding for navigation */}
-        <main className="pt-16 md:pl-64 min-h-screen">
-          {/* Mobile padding bottom to prevent content from being hidden under bottom nav */}
-          <div className="pb-16 md:pb-0">{children}</div>
-        </main>
-      </body>
-    </html>
+      {/* Main Content Wrapper with padding for navigation */}
+      <main className="pt-16 md:pl-64 min-h-screen">
+        {/* Mobile padding bottom to prevent content from being hidden under bottom nav */}
+        <div className="pb-16 md:pb-0">{children}</div>
+      </main>
+    </div>
   );
 }
