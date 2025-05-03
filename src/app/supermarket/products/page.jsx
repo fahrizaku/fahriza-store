@@ -212,6 +212,7 @@ const ProductCard = ({ product }) => {
           alt={product.name}
           width={500}
           height={500}
+          priority
           className="w-full h-40 object-cover"
         />
         {product.isNewArrival && (
