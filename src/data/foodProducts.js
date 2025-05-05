@@ -11,27 +11,19 @@ export const dummyFoods = [
       {
         type: "image",
         url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-        thumbnail:
-          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
         caption: "Nasi Ayam Penyet dengan Sambal",
       },
       {
         type: "image",
         url: "https://ik.imagekit.io/j4eizgagj/Cadbury%20Dairy%20Milk%20Cokelat%20Buy%202%20Get%201.jpg?updatedAt=1738334778465",
-        thumbnail:
-          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
         caption: "Close-up Sambal Ayam Penyet",
       },
       {
         type: "video",
         url: "https://ik.imagekit.io/j4eizgagj/Food/videomakan.mp4?updatedAt=1746366869214",
-        thumbnail:
-          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
         caption: "Proses pembuatan Nasi Ayam Penyet",
       },
     ],
-    image:
-      "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417", // Legacy field untuk kompatibilitas
     isNewArrival: false,
     stock: 0,
     unit: "porsi",
@@ -49,27 +41,19 @@ export const dummyFoods = [
       {
         type: "image",
         url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-        thumbnail:
-          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
         caption: "Bakso Sapi Jumbo dengan Kuah",
       },
       {
         type: "image",
         url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-        thumbnail:
-          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
         caption: "Bakso Sapi dari Daging Segar",
       },
       {
         type: "video",
         url: "https://ik.imagekit.io/j4eizgagj/Food/videomakan.mp4?updatedAt=1746366869214",
-        thumbnail:
-          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
         caption: "Review Bakso Sapi Jumbo",
       },
     ],
-    image:
-      "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
     isNewArrival: false,
     stock: 75,
     unit: "mangkok",
@@ -87,20 +71,14 @@ export const dummyFoods = [
       {
         type: "image",
         url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-        thumbnail:
-          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
         caption: "Nasi Goreng Spesial",
       },
       {
         type: "image",
         url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-        thumbnail:
-          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
         caption: "Nasi Goreng dengan Telur Mata Sapi",
       },
     ],
-    image:
-      "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
     isNewArrival: false,
     stock: 60,
     unit: "porsi",

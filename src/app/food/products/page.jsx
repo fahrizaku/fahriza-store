@@ -17,14 +17,18 @@ const formatPrice = (price) => {
 
 // Komponenen kartu makanan
 const FoodCard = ({ food }) => {
-  // Mendapatkan media utama (gambar thumbnail)
+  // Mendapatkan media utama (media pertama sebagai gambar utama)
   const getMainImage = () => {
-    // Jika memiliki media array, gunakan thumbnail dari media pertama
+    // Jika memiliki media array, gunakan URL dari media pertama jika itu gambar
     if (food.media && food.media.length > 0) {
-      return food.media[0].thumbnail;
+      // Cari media pertama yang berupa gambar
+      const firstImage = food.media.find((item) => item.type === "image");
+      if (firstImage) {
+        return firstImage.url;
+      }
     }
-    // Fallback ke image lama jika media tidak ada
-    return food.image;
+    // Fallback ke placeholder jika media tidak ada atau tidak ada gambar
+    return "/placeholder-image.jpg";
   };
 
   // Cek apakah memiliki video
@@ -58,7 +62,7 @@ const FoodCard = ({ food }) => {
           )}
           {/* Indikator video */}
           {hasVideo && (
-            <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-xs font-medium px-2 py-1 rounded-full flex items-center">
+            <div className="absolute bottom-2 right-2 bg-black text-white text-xs font-medium px-2 py-1 rounded-full flex items-center">
               <Video className="h-3 w-3 mr-1" />
               <span>Video</span>
             </div>

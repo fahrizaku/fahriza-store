@@ -11,7 +11,7 @@ import {
   Link,
 } from "lucide-react";
 import { dummyFoods } from "@/data/foodProducts";
-import MediaGallery from "./_components/MediaGallery"; // Pastikan Anda membuat file MediaGallery.jsx di folder components
+import MediaGallery from "./_components/MediaGallery";
 
 // Fungsi untuk memformat harga
 const formatPrice = (price) => {
@@ -59,36 +59,6 @@ export default function ProductDetailPage() {
     }
   };
 
-  // Mengkonversi product.image menjadi media jika media tidak ada
-  const getMediaArray = (product) => {
-    if (!product) return [];
-
-    // Jika sudah memiliki property media, gunakan itu
-    if (product.media && product.media.length > 0) {
-      // Pastikan semua properti yang diperlukan ada
-      return product.media.map((item) => ({
-        type: item.type || "image",
-        url: item.url || "",
-        thumbnail: item.thumbnail || item.url || "",
-        caption: item.caption || "",
-      }));
-    }
-
-    // Jika tidak, buat media array dari image
-    if (product.image) {
-      return [
-        {
-          type: "image",
-          url: product.image,
-          thumbnail: product.image,
-          caption: product.name,
-        },
-      ];
-    }
-
-    return [];
-  };
-
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
@@ -133,7 +103,8 @@ export default function ProductDetailPage() {
     );
   }
 
-  const mediaArray = getMediaArray(product);
+  // Menggunakan media array langsung
+  const mediaArray = product.media || [];
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
@@ -374,66 +345,6 @@ export default function ProductDetailPage() {
               </button>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Rekomendasi produk serupa */}
-      <div className="mt-8 sm:mt-12">
-        <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
-          Menu Serupa
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {dummyFoods
-            .filter(
-              (item) =>
-                item.id !== product.id && item.category === product.category
-            )
-            .slice(0, 4)
-            .map((relatedProduct) => (
-              <div
-                key={relatedProduct.id}
-                className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-              >
-                <Link href={`/food/products/${relatedProduct.id}`}>
-                  <div className="relative">
-                    <Image
-                      src={relatedProduct.image}
-                      alt={relatedProduct.name}
-                      width={300}
-                      height={200}
-                      className="w-full h-32 object-cover"
-                    />
-                    {relatedProduct.discountPrice && (
-                      <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded">
-                        {Math.round(
-                          ((relatedProduct.price -
-                            relatedProduct.discountPrice) /
-                            relatedProduct.price) *
-                            100
-                        )}
-                        % OFF
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-2">
-                    <h3 className="font-medium text-gray-800 text-sm line-clamp-1">
-                      {relatedProduct.name}
-                    </h3>
-                    <div className="mt-1">
-                      {relatedProduct.discountPrice ? (
-                        <span className="font-semibold text-red-600 text-sm">
-                          {formatPrice(relatedProduct.discountPrice)}
-                        </span>
-                      ) : (
-                        <span className="font-semibold text-gray-800 text-sm">
-                          {formatPrice(relatedProduct.price)}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </Link>
-              </div>
-            ))}
         </div>
       </div>
     </div>

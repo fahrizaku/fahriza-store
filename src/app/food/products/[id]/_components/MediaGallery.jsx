@@ -14,7 +14,7 @@ const MediaGallery = ({ media }) => {
   if (!media || media.length === 0) {
     return (
       <div className="relative w-full h-64 sm:h-80 bg-gray-200 rounded-lg flex items-center justify-center">
-        <span className="text-gray-400">Tidak ada gambar</span>
+        <span className="text-gray-400">Tidak ada media</span>
       </div>
     );
   }
@@ -74,7 +74,7 @@ const MediaGallery = ({ media }) => {
     }
   };
 
-  // Thumbnail component
+  // Thumbnail component for the carousel
   const Thumbnail = ({ item, index, isActive, onClick }) => (
     <div
       onClick={(e) => {
@@ -86,7 +86,7 @@ const MediaGallery = ({ media }) => {
       }`}
     >
       <Image
-        src={item.thumbnail}
+        src={item.url}
         alt={item.caption || `Media ${index + 1}`}
         width={100}
         height={100}
@@ -107,7 +107,7 @@ const MediaGallery = ({ media }) => {
       onClick={onClick}
     >
       <Image
-        src={media.thumbnail}
+        src={media.url}
         alt={media.caption || "Video thumbnail"}
         fill
         className="object-cover"
@@ -172,7 +172,7 @@ const MediaGallery = ({ media }) => {
                 controls
                 autoPlay
                 className="max-h-full max-w-full"
-                poster={lightboxMedia.thumbnail}
+                poster={lightboxMedia.url}
                 onClick={(e) => e.stopPropagation()}
               >
                 Your browser does not support the video tag.
@@ -183,7 +183,7 @@ const MediaGallery = ({ media }) => {
                 onClick={playVideo}
               >
                 <Image
-                  src={lightboxMedia.thumbnail}
+                  src={lightboxMedia.url}
                   alt={lightboxMedia.caption || "Video thumbnail"}
                   width={1200}
                   height={800}
