@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/supermarket/products");
+    router.push("/food/products");
   }, [router]);
 
   // Return minimal content during redirect
