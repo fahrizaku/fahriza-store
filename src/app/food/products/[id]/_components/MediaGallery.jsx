@@ -10,7 +10,7 @@ const MediaGallery = ({ media }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const videoRef = useRef(null);
 
-  // Jika tidak ada media, gunakan placeholder
+  // Fallback if no media
   if (!media || media.length === 0) {
     return (
       <div className="relative w-full h-64 sm:h-80 bg-gray-200 rounded-lg flex items-center justify-center">
@@ -21,60 +21,54 @@ const MediaGallery = ({ media }) => {
 
   const currentMedia = media[currentIndex];
 
+  // Navigation handlers
   const handlePrevious = (e) => {
-    if (e) e.stopPropagation();
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? media.length - 1 : prevIndex - 1
-    );
+    e?.stopPropagation();
+    setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
   };
 
   const handleNext = (e) => {
-    if (e) e.stopPropagation();
-    setCurrentIndex((prevIndex) =>
-      prevIndex === media.length - 1 ? 0 : prevIndex + 1
-    );
+    e?.stopPropagation();
+    setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
   };
 
+  // Lightbox controls
   const openLightbox = (index, e) => {
-    if (e) e.stopPropagation();
+    e?.stopPropagation();
     setLightboxIndex(index);
     setShowLightbox(true);
     setIsVideoPlaying(false);
   };
 
   const closeLightbox = (e) => {
-    if (e) e.stopPropagation();
+    e?.stopPropagation();
     setShowLightbox(false);
     setIsVideoPlaying(false);
   };
 
-  const handleLightboxPrevious = (e) => {
-    if (e) e.stopPropagation();
-    setLightboxIndex((prevIndex) => {
-      const newIndex = prevIndex === 0 ? media.length - 1 : prevIndex - 1;
-      setIsVideoPlaying(false);
-      return newIndex;
-    });
-  };
-
-  const handleLightboxNext = (e) => {
-    if (e) e.stopPropagation();
-    setLightboxIndex((prevIndex) => {
-      const newIndex = prevIndex === media.length - 1 ? 0 : prevIndex + 1;
+  const handleLightboxNav = (direction, e) => {
+    e?.stopPropagation();
+    setLightboxIndex((prev) => {
+      const newIndex =
+        direction === "prev"
+          ? prev === 0
+            ? media.length - 1
+            : prev - 1
+          : prev === media.length - 1
+          ? 0
+          : prev + 1;
       setIsVideoPlaying(false);
       return newIndex;
     });
   };
 
   const playVideo = (e) => {
-    if (e) e.stopPropagation();
+    e?.stopPropagation();
     setIsVideoPlaying(true);
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
+    videoRef.current?.play();
   };
 
-  // Thumbnail component for the carousel
+  // Thumbnail Component
   const Thumbnail = ({ item, index, isActive, onClick }) => (
     <div
       onClick={(e) => {
@@ -86,53 +80,60 @@ const MediaGallery = ({ media }) => {
       }`}
     >
       <Image
-        src={item.url}
+        src={item.thumbnail || item.url}
         alt={item.caption || `Media ${index + 1}`}
         width={100}
         height={100}
         className="w-16 h-16 object-cover"
+        onError={(e) => {
+          e.target.src =
+            "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%20Maxx%2032G.jpg?updatedAt=1738334778261";
+        }}
       />
       {item.type === "video" && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
-          <Play className="h-6 w-6 text-white" />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+          <Play className="h-4 w-4 text-white" />
         </div>
       )}
     </div>
   );
 
-  // Video Thumbnail component
+  // Video Thumbnail Component
   const VideoThumbnail = ({ media, onClick }) => (
     <div
-      className="relative w-full h-64 sm:h-80 md:h-96 cursor-pointer"
+      className="relative w-full h-64 sm:h-80 md:h-96 cursor-pointer rounded-lg overflow-hidden"
       onClick={onClick}
     >
       <Image
-        src={media.url}
+        src={
+          media.thumbnail ||
+          "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%20Maxx%2032G.jpg?updatedAt=1738334778261"
+        }
         alt={media.caption || "Video thumbnail"}
         fill
         className="object-cover"
         priority
       />
-      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 hover:bg-opacity-30 transition-all">
-        <div className="bg-white bg-opacity-80 rounded-full p-4 shadow-lg hover:bg-opacity-100 transition-all">
-          <Play className="h-6 w-6 sm:h-8 sm:w-8 text-orange-600" />
+      <div className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-opacity-30 transition-all">
+        <div className="bg-white bg-opacity-80 rounded-full p-3 shadow-lg hover:bg-opacity-100 transition-all">
+          <Play className="h-6 w-6 text-orange-600" />
         </div>
       </div>
       {media.caption && (
-        <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm">
+        <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white p-2 text-sm">
           {media.caption}
         </div>
       )}
     </div>
   );
 
-  // Lightbox component
+  // Lightbox Component
   const Lightbox = () => {
     const lightboxMedia = media[lightboxIndex];
 
     return (
       <div
-        className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
+        className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
         onClick={closeLightbox}
       >
         <button
@@ -144,9 +145,8 @@ const MediaGallery = ({ media }) => {
 
         <div className="flex items-center justify-center w-full h-full">
           <button
-            onClick={handleLightboxPrevious}
+            onClick={(e) => handleLightboxNav("prev", e)}
             className="absolute left-4 text-white hover:text-gray-300 z-[60]"
-            aria-label="Previous media"
           >
             <ChevronLeft className="h-10 w-10" />
           </button>
@@ -156,15 +156,13 @@ const MediaGallery = ({ media }) => {
             onClick={(e) => e.stopPropagation()}
           >
             {lightboxMedia.type === "image" ? (
-              <div className="relative w-full h-full flex items-center justify-center">
-                <Image
-                  src={lightboxMedia.url}
-                  alt={lightboxMedia.caption || `Media ${lightboxIndex + 1}`}
-                  width={1200}
-                  height={800}
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
+              <Image
+                src={lightboxMedia.url}
+                alt={lightboxMedia.caption || `Media ${lightboxIndex + 1}`}
+                width={1200}
+                height={800}
+                className="max-h-full max-w-full object-contain"
+              />
             ) : isVideoPlaying ? (
               <video
                 ref={videoRef}
@@ -172,18 +170,21 @@ const MediaGallery = ({ media }) => {
                 controls
                 autoPlay
                 className="max-h-full max-w-full"
-                poster={lightboxMedia.url}
-                onClick={(e) => e.stopPropagation()}
-              >
-                Your browser does not support the video tag.
-              </video>
+                poster={
+                  lightboxMedia.thumbnail ||
+                  "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%20Maxx%2032G.jpg?updatedAt=1738334778261"
+                }
+              />
             ) : (
               <div
                 className="relative w-full max-w-4xl cursor-pointer"
                 onClick={playVideo}
               >
                 <Image
-                  src={lightboxMedia.url}
+                  src={
+                    lightboxMedia.thumbnail ||
+                    "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%20Maxx%2032G.jpg?updatedAt=1738334778261"
+                  }
                   alt={lightboxMedia.caption || "Video thumbnail"}
                   width={1200}
                   height={800}
@@ -199,9 +200,8 @@ const MediaGallery = ({ media }) => {
           </div>
 
           <button
-            onClick={handleLightboxNext}
+            onClick={(e) => handleLightboxNav("next", e)}
             className="absolute right-4 text-white hover:text-gray-300 z-[60]"
-            aria-label="Next media"
           >
             <ChevronRight className="h-10 w-10" />
           </button>
@@ -217,14 +217,14 @@ const MediaGallery = ({ media }) => {
   };
 
   return (
-    <div className="w-full">
-      {/* Main media display */}
-      {currentMedia.type === "image" ? (
-        <div
-          className="relative rounded-lg overflow-hidden shadow-sm border border-gray-100 mb-2 cursor-pointer"
-          onClick={(e) => openLightbox(currentIndex, e)}
-        >
-          <div className="relative w-full h-64 sm:h-80 md:h-96">
+    <div className="w-full relative">
+      {/* Main Media Display */}
+      <div className="relative rounded-lg overflow-hidden shadow-sm border border-gray-100 mb-2">
+        {currentMedia.type === "image" ? (
+          <div
+            className="relative w-full h-64 sm:h-80 md:h-96 cursor-pointer"
+            onClick={(e) => openLightbox(currentIndex, e)}
+          >
             <Image
               src={currentMedia.url}
               alt={currentMedia.caption || `Media ${currentIndex + 1}`}
@@ -232,52 +232,48 @@ const MediaGallery = ({ media }) => {
               className="object-cover"
               priority
             />
+            {currentMedia.caption && (
+              <div className="absolute bottom-0 left-0 right-0 bg-black/50 text-white p-2 text-sm">
+                {currentMedia.caption}
+              </div>
+            )}
           </div>
+        ) : (
+          <VideoThumbnail
+            media={currentMedia}
+            onClick={(e) => openLightbox(currentIndex, e)}
+          />
+        )}
 
-          {/* Caption for image */}
-          {currentMedia.caption && (
-            <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm">
-              {currentMedia.caption}
-            </div>
-          )}
-        </div>
-      ) : (
-        <VideoThumbnail
-          media={currentMedia}
-          onClick={(e) => openLightbox(currentIndex, e)}
-        />
-      )}
+        {/* Navigation Arrows */}
+        {media.length > 1 && (
+          <>
+            <button
+              onClick={handlePrevious}
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 rounded-full p-1 shadow hover:bg-opacity-100 z-10"
+            >
+              <ChevronLeft className="h-6 w-6 text-gray-800" />
+            </button>
+            <button
+              onClick={handleNext}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 rounded-full p-1 shadow hover:bg-opacity-100 z-10"
+            >
+              <ChevronRight className="h-6 w-6 text-gray-800" />
+            </button>
+          </>
+        )}
+      </div>
 
-      {/* Navigation buttons */}
+      {/* Thumbnail Carousel */}
       {media.length > 1 && (
-        <>
-          <button
-            onClick={handlePrevious}
-            className="absolute left-2 top-[20%] sm:top-[25%] md:top-[30%] transform -translate-y-1/2 bg-white bg-opacity-75 rounded-full p-1 shadow hover:bg-opacity-100 z-10"
-            aria-label="Previous media"
-          >
-            <ChevronLeft className="h-6 w-6 text-gray-800" />
-          </button>
-          <button
-            onClick={handleNext}
-            className="absolute right-2 top-[20%] sm:top-[25%] md:top-[30%] transform -translate-y-1/2 bg-white bg-opacity-75 rounded-full p-1 shadow hover:bg-opacity-100 z-10"
-            aria-label="Next media"
-          >
-            <ChevronRight className="h-6 w-6 text-gray-800" />
-          </button>
-        </>
-      )}
-
-      {/* Thumbnails */}
-      {media.length > 1 && (
-        <div className="flex space-x-2 overflow-x-auto py-2">
+        <div className="flex space-x-2 overflow-x-auto py-2 no-scrollbar">
           {media.map((item, index) => (
             <Thumbnail
               key={index}
               item={item}
               index={index}
               isActive={currentIndex === index}
-              onClick={(e) => setCurrentIndex(index)}
+              onClick={() => setCurrentIndex(index)}
             />
           ))}
         </div>

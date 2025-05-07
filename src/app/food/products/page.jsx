@@ -60,19 +60,6 @@ const FoodCard = ({ food }) => {
               % OFF
             </div>
           )}
-          {/* Indikator video */}
-          {hasVideo && (
-            <div className="absolute bottom-2 right-2 bg-black text-white text-xs font-medium px-2 py-1 rounded-full flex items-center">
-              <Video className="h-3 w-3 mr-1" />
-              <span>Video</span>
-            </div>
-          )}
-          {/* Indikator jumlah media */}
-          {food.media && food.media.length > 1 && (
-            <div className="absolute bottom-2 left-2 bg-black bg-opacity-60 text-white text-xs font-medium px-2 py-1 rounded-full">
-              {food.media.length} Media
-            </div>
-          )}
         </div>
 
         <div className="p-3">
@@ -185,25 +172,6 @@ export default function FoodPage() {
             Cari
           </button>
         </form>
-      </div>
-
-      {/* Filter Media */}
-      <div className="mb-4 flex flex-wrap gap-2">
-        <button className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
-          Semua
-        </button>
-        <button className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
-          Dengan Video
-        </button>
-        <button className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
-          Dengan Banyak Foto
-        </button>
-        <button className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
-          Menu Baru
-        </button>
-        <button className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 py-1 px-3 rounded-full">
-          Promo
-        </button>
       </div>
 
       {/* Daftar Menu */}
