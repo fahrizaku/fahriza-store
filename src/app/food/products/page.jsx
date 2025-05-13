@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Search, Video } from "lucide-react";
+import { Search } from "lucide-react";
 import Image from "next/image";
 import { dummyFoods } from "@/data/foodProducts";
 import Link from "next/link";

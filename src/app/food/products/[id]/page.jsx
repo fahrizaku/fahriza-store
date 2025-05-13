@@ -29,6 +29,8 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
+  const [selectedVariant, setSelectedVariant] = useState(null);
+  const [mediaToDisplay, setMediaToDisplay] = useState([]);
 
   useEffect(() => {
     const fetchProduct = () => {
@@ -39,6 +41,17 @@ export default function ProductDetailPage() {
           (item) => item.id === parseInt(id)
         );
         setProduct(foundProduct || null);
+
+        if (foundProduct) {
+          // Set default variant if available
+          if (foundProduct.variants && foundProduct.variants.length > 0) {
+            setSelectedVariant(foundProduct.variants[0]);
+          }
+
+          // Initialize media
+          setMediaToDisplay(foundProduct.media || []);
+        }
+
         setLoading(false);
       }, 500);
     };
@@ -48,15 +61,70 @@ export default function ProductDetailPage() {
     }
   }, [id]);
 
+  // Update displayed media when variant changes
+  useEffect(() => {
+    if (selectedVariant && selectedVariant.media) {
+      // Show variant media first, followed by product media (excluding duplicates)
+      const variantMedia = selectedVariant.media || [];
+      const productMedia = product.media || [];
+
+      // Combine the media, prioritizing variant media
+      const combinedMedia = [
+        ...variantMedia,
+        ...productMedia.filter(
+          (pm) => !variantMedia.some((vm) => vm.url === pm.url)
+        ),
+      ];
+
+      setMediaToDisplay(combinedMedia);
+    } else if (product) {
+      setMediaToDisplay(product.media || []);
+    }
+  }, [selectedVariant, product]);
+
   const handleGoBack = () => {
     router.back();
   };
 
   const handleQuantityChange = (amount) => {
     const newQuantity = quantity + amount;
-    if (newQuantity >= 1 && (!product.stock || newQuantity <= product.stock)) {
+    const currentStock = selectedVariant
+      ? selectedVariant.stock
+      : product.stock;
+
+    if (newQuantity >= 1 && (!currentStock || newQuantity <= currentStock)) {
       setQuantity(newQuantity);
     }
+  };
+
+  const handleVariantChange = (variant) => {
+    setSelectedVariant(variant);
+
+    // Reset quantity if it exceeds variant stock
+    if (variant.stock && quantity > variant.stock) {
+      setQuantity(1);
+    }
+  };
+
+  // Calculate current price based on selected variant
+  const getCurrentPrice = () => {
+    if (selectedVariant) {
+      return selectedVariant.discountPrice || selectedVariant.price;
+    }
+    return product.discountPrice || product.price;
+  };
+
+  // Calculate original price based on selected variant
+  const getOriginalPrice = () => {
+    if (selectedVariant) {
+      return selectedVariant.discountPrice ? selectedVariant.price : null;
+    }
+    return product.discountPrice ? product.price : null;
+  };
+
+  // Get current stock based on selected variant
+  const getCurrentStock = () => {
+    return selectedVariant ? selectedVariant.stock : product.stock;
   };
 
   if (loading) {
@@ -103,9 +171,6 @@ export default function ProductDetailPage() {
     );
   }
 
-  // Menggunakan media array langsung
-  const mediaArray = product.media || [];
-
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
       <button
@@ -119,7 +184,7 @@ export default function ProductDetailPage() {
       <div className="flex flex-col md:flex-row gap-4 md:gap-6">
         {/* Media Gallery */}
         <div className="w-full md:w-1/2 mb-6 md:mb-0">
-          <MediaGallery media={mediaArray} />
+          <MediaGallery media={mediaToDisplay} />
 
           {/* Badges */}
           <div className="flex flex-wrap gap-2 mt-2">
@@ -128,21 +193,32 @@ export default function ProductDetailPage() {
                 Menu Baru
               </div>
             )}
-            {product.discountPrice && (
+            {selectedVariant && selectedVariant.discountPrice ? (
               <div className="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded">
                 {Math.round(
-                  ((product.price - product.discountPrice) / product.price) *
+                  ((selectedVariant.price - selectedVariant.discountPrice) /
+                    selectedVariant.price) *
                     100
                 )}
                 % Diskon
               </div>
+            ) : (
+              product.discountPrice && (
+                <div className="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded">
+                  {Math.round(
+                    ((product.price - product.discountPrice) / product.price) *
+                      100
+                  )}
+                  % Diskon
+                </div>
+              )
             )}
-            {product.stock <= 10 && product.stock > 0 && (
+            {getCurrentStock() <= 10 && getCurrentStock() > 0 && (
               <div className="bg-orange-100 text-orange-800 text-xs font-medium px-2 py-1 rounded">
-                Sisa {product.stock} {product.unit}
+                Sisa {getCurrentStock()} {product.unit}
               </div>
             )}
-            {product.stock <= 0 && (
+            {getCurrentStock() <= 0 && (
               <div className="bg-red-100 text-red-800 text-xs font-medium px-2 py-1 rounded">
                 Stok Habis
               </div>
@@ -183,20 +259,66 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
+          {/* Variants Selection */}
+          {product.variants && product.variants.length > 0 && (
+            <div className="border-b border-gray-200 pb-3 mb-3">
+              <h3 className="text-base sm:text-lg font-medium text-gray-800 mb-2">
+                Varian
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {product.variants.map((variant, index) => (
+                  <button
+                    key={index}
+                    className={`px-3 py-2 rounded-md border ${
+                      selectedVariant && selectedVariant.name === variant.name
+                        ? "border-orange-500 bg-orange-50"
+                        : "border-gray-300 hover:border-gray-400"
+                    } ${
+                      variant.stock <= 0
+                        ? "opacity-50 cursor-not-allowed"
+                        : "cursor-pointer"
+                    }`}
+                    onClick={() =>
+                      variant.stock > 0 && handleVariantChange(variant)
+                    }
+                    disabled={variant.stock <= 0}
+                  >
+                    <div className="flex items-center gap-2">
+                      {variant.thumbnail && (
+                        <div className="w-6 h-6 rounded-full overflow-hidden border border-gray-200">
+                          <Image
+                            src={variant.thumbnail}
+                            alt={variant.name}
+                            width={24}
+                            height={24}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <span className="text-sm font-medium">
+                        {variant.name}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Harga Produk */}
           <div className="border-b border-gray-200 pb-3 mb-3">
-            {product.discountPrice ? (
+            {getOriginalPrice() ? (
               <div className="flex flex-col">
                 <span className="text-sm sm:text-base text-gray-500 line-through">
-                  {formatPrice(product.price)}
+                  {formatPrice(getOriginalPrice())}
                 </span>
                 <span className="text-xl sm:text-2xl font-bold text-red-600">
-                  {formatPrice(product.discountPrice)}
+                  {formatPrice(getCurrentPrice())}
                 </span>
               </div>
             ) : (
               <span className="text-xl sm:text-2xl font-bold text-gray-800">
-                {formatPrice(product.price)}
+                {formatPrice(getCurrentPrice())}
               </span>
             )}
             <div className="text-xs sm:text-sm text-gray-500 mt-1">
@@ -205,16 +327,16 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Media Summary */}
-          {mediaArray.length > 0 && (
+          {mediaToDisplay.length > 0 && (
             <div className="border-b border-gray-200 pb-3 mb-3">
               <h3 className="text-base sm:text-lg font-medium text-gray-800 mb-1 sm:mb-2">
                 Media
               </h3>
               <p className="text-sm text-gray-600">
-                {mediaArray.filter((m) => m.type === "image").length} foto
-                {mediaArray.filter((m) => m.type === "video").length > 0 &&
+                {mediaToDisplay.filter((m) => m.type === "image").length} foto
+                {mediaToDisplay.filter((m) => m.type === "video").length > 0 &&
                   ` • ${
-                    mediaArray.filter((m) => m.type === "video").length
+                    mediaToDisplay.filter((m) => m.type === "video").length
                   } video`}
               </p>
             </div>
@@ -226,7 +348,9 @@ export default function ProductDetailPage() {
               Deskripsi
             </h3>
             <p className="text-sm sm:text-base text-gray-600">
-              {product.description}
+              {selectedVariant && selectedVariant.description
+                ? selectedVariant.description
+                : product.description}
             </p>
           </div>
 
@@ -237,24 +361,24 @@ export default function ProductDetailPage() {
             </h3>
             <p
               className={`text-sm sm:text-base ${
-                product.stock <= 0
+                getCurrentStock() <= 0
                   ? "text-red-500 font-medium"
-                  : product.stock <= 10
+                  : getCurrentStock() <= 10
                   ? "text-orange-500 font-medium"
                   : "text-green-600 font-medium"
               }`}
             >
-              {product.stock <= 0
+              {getCurrentStock() <= 0
                 ? "Stok Habis"
-                : product.stock <= 10
-                ? `Sisa ${product.stock} ${product.unit}`
+                : getCurrentStock() <= 10
+                ? `Sisa ${getCurrentStock()} ${product.unit}`
                 : "Stok Tersedia"}
             </p>
           </div>
 
           {/* Informasi Pembelian */}
           <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
-            {product.stock > 0 ? (
+            {getCurrentStock() > 0 ? (
               <>
                 <div className="flex items-center mb-3 sm:mb-4">
                   <span className="text-sm sm:text-base text-gray-700 mr-3 sm:mr-4 font-medium">
@@ -274,7 +398,7 @@ export default function ProductDetailPage() {
                     <button
                       onClick={() => handleQuantityChange(1)}
                       className="p-1 sm:p-2 text-gray-500 hover:text-gray-700"
-                      disabled={quantity >= product.stock}
+                      disabled={quantity >= getCurrentStock()}
                     >
                       <PlusCircle className="h-4 w-4 sm:h-5 sm:w-5" />
                     </button>
@@ -285,7 +409,9 @@ export default function ProductDetailPage() {
                   className="w-full bg-orange-600 hover:bg-orange-700 text-white py-2 sm:py-3 rounded-lg flex items-center justify-center text-sm sm:text-base font-medium"
                   onClick={() =>
                     alert(
-                      `Menambahkan ${quantity} ${product.unit} ${product.name} ke keranjang`
+                      `Menambahkan ${quantity} ${product.unit} ${product.name}${
+                        selectedVariant ? ` (${selectedVariant.name})` : ""
+                      } ke keranjang`
                     )
                   }
                 >
