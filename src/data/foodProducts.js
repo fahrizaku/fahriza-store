@@ -93,202 +93,98 @@ export const dummyFoods = [
     unit: "porsi",
     description: "Nasi dengan ayam penyet, sambal, dan lalapan segar",
   },
-  // {
-  //   id: 2,
-  //   name: "Bakso Sapi Jumbo",
-  //   category: "Makanan Utama",
-  //   price: 30000,
-  //   discountPrice: 28000,
-  //   rating: 4.7,
-  //   reviewCount: 186,
-  //   media: [
-  //     {
-  //       type: "image",
-  //       url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-  //       caption: "Bakso Sapi Jumbo dengan Kuah",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //     },
-  //     {
-  //       type: "image",
-  //       url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-  //       caption: "Bakso Sapi dari Daging Segar",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //     },
-  //     {
-  //       type: "video",
-  //       url: "https://ik.imagekit.io/j4eizgagj/Food/videomakan.mp4?updatedAt=1746366869214",
-  //       caption: "Review Bakso Sapi Jumbo",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //     },
-  //   ],
-  //   variants: [
-  //     {
-  //       name: "Original",
-  //       price: 30000,
-  //       discountPrice: 28000,
-  //       stock: 75,
-  //       description: "Bakso daging sapi pilihan dengan kuah gurih dan mie",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(2).png?updatedAt=1746462333526",
-  //       media: [
-  //         {
-  //           type: "image",
-  //           url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-  //           caption: "Bakso Sapi Original",
-  //           thumbnail:
-  //             "https://ik.imagekit.io/j4eizgagj/thumbnail(2).png?updatedAt=1746462333526",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Spesial",
-  //       price: 35000,
-  //       discountPrice: 32000,
-  //       stock: 45,
-  //       description:
-  //         "Bakso daging sapi pilihan dengan tambahan tetelan dan urat",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(3).png?updatedAt=1746462333429",
-  //       media: [
-  //         {
-  //           type: "image",
-  //           url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%20Maxx%2032G.jpg?updatedAt=1738334778261",
-  //           caption: "Bakso Sapi Spesial dengan Tetelan",
-  //           thumbnail:
-  //             "https://ik.imagekit.io/j4eizgagj/thumbnail(3).png?updatedAt=1746462333429",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Beranak",
-  //       price: 40000,
-  //       discountPrice: 38000,
-  //       stock: 30,
-  //       description:
-  //         "Bakso daging sapi jumbo dengan isian bakso kecil di dalamnya",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //       media: [
-  //         {
-  //           type: "image",
-  //           url: "https://ik.imagekit.io/j4eizgagj/Cadbury%20Dairy%20Milk%20Cokelat%20Buy%202%20Get%201.jpg?updatedAt=1738334778465",
-  //           caption: "Bakso Sapi Beranak",
-  //           thumbnail:
-  //             "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //         },
-  //       ],
-  //     },
-  //   ],
-  //   isNewArrival: false,
-  //   stock: 75,
-  //   unit: "mangkok",
-  //   description: "Bakso daging sapi pilihan dengan kuah gurih dan mie",
-  // },
-  // {
-  //   id: 3,
-  //   name: "Nasi Goreng Spesial",
-  //   category: "Makanan Utama",
-  //   price: 28000,
-  //   discountPrice: null,
-  //   rating: 4.5,
-  //   reviewCount: 120,
-  //   media: [
-  //     {
-  //       type: "image",
-  //       url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-  //       caption: "Nasi Goreng Spesial",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //     },
-  //     {
-  //       type: "image",
-  //       url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-  //       caption: "Nasi Goreng dengan Telur Mata Sapi",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //     },
-  //   ],
-  //   variants: [
-  //     {
-  //       name: "Original",
-  //       price: 28000,
-  //       discountPrice: null,
-  //       stock: 60,
-  //       description: "Nasi goreng dengan telur, ayam, dan sayuran pilihan",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //       media: [
-  //         {
-  //           type: "image",
-  //           url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-  //           caption: "Nasi Goreng Original",
-  //           thumbnail:
-  //             "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Seafood",
-  //       price: 32000,
-  //       discountPrice: 30000,
-  //       stock: 45,
-  //       description: "Nasi goreng dengan udang, cumi, dan sayuran pilihan",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(2).png?updatedAt=1746462333526",
-  //       media: [
-  //         {
-  //           type: "image",
-  //           url: "https://ik.imagekit.io/j4eizgagj/Cadbury%20Dairy%20Milk%20Cokelat%20Buy%202%20Get%201.jpg?updatedAt=1738334778465",
-  //           caption: "Nasi Goreng Seafood",
-  //           thumbnail:
-  //             "https://ik.imagekit.io/j4eizgagj/thumbnail(2).png?updatedAt=1746462333526",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Kambing",
-  //       price: 35000,
-  //       discountPrice: null,
-  //       stock: 25,
-  //       description:
-  //         "Nasi goreng dengan daging kambing empuk dan rempah pilihan",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(3).png?updatedAt=1746462333429",
-  //       media: [
-  //         {
-  //           type: "image",
-  //           url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%20Maxx%2032G.jpg?updatedAt=1738334778261",
-  //           caption: "Nasi Goreng Kambing",
-  //           thumbnail:
-  //             "https://ik.imagekit.io/j4eizgagj/thumbnail(3).png?updatedAt=1746462333429",
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Iga",
-  //       price: 38000,
-  //       discountPrice: 36000,
-  //       stock: 15,
-  //       description: "Nasi goreng dengan potongan iga sapi bakar dan telur",
-  //       thumbnail:
-  //         "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //       media: [
-  //         {
-  //           type: "image",
-  //           url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
-  //           caption: "Nasi Goreng Iga",
-  //           thumbnail:
-  //             "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
-  //         },
-  //       ],
-  //     },
-  //   ],
-  //   isNewArrival: false,
-  //   stock: 60,
-  //   unit: "porsi",
-  //   description: "Nasi goreng dengan telur, ayam, dan sayuran pilihan",
-  // },
+  {
+    id: 2,
+    name: "Bakso Sapi Jumbo",
+    category: "Makanan Utama",
+    price: 30000,
+    discountPrice: 28000,
+    rating: 4.7,
+    reviewCount: 186,
+    media: [
+      {
+        type: "image",
+        url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
+        caption: "Bakso Sapi Jumbo dengan Kuah",
+        thumbnail:
+          "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
+      },
+      {
+        type: "image",
+        url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
+        caption: "Bakso Sapi dari Daging Segar",
+        thumbnail:
+          "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
+      },
+      {
+        type: "video",
+        url: "https://ik.imagekit.io/j4eizgagj/Food/videomakan.mp4?updatedAt=1746366869214",
+        caption: "Review Bakso Sapi Jumbo",
+        thumbnail:
+          "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
+      },
+    ],
+    variants: [
+      {
+        name: "Original",
+        price: 30000,
+        discountPrice: 28000,
+        stock: 75,
+        description: "Bakso daging sapi pilihan dengan kuah gurih dan mie",
+        thumbnail:
+          "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333526",
+        media: [
+          {
+            type: "image",
+            url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%203X20g.jpg?updatedAt=1738334778417",
+            caption: "Bakso Sapi Original",
+            thumbnail:
+              "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333526",
+          },
+        ],
+      },
+      {
+        name: "Spesial",
+        price: 35000,
+        discountPrice: 32000,
+        stock: 45,
+        description:
+          "Bakso daging sapi pilihan dengan tambahan tetelan dan urat",
+        thumbnail:
+          "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333429",
+        media: [
+          {
+            type: "image",
+            url: "https://ik.imagekit.io/j4eizgagj/Beng-Beng%20Wafer%20Chocolate%20Maxx%2032G.jpg?updatedAt=1738334778261",
+            caption: "Bakso Sapi Spesial dengan Tetelan",
+            thumbnail:
+              "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333429",
+          },
+        ],
+      },
+      {
+        name: "Beranak",
+        price: 40000,
+        discountPrice: 38000,
+        stock: 30,
+        description:
+          "Bakso daging sapi jumbo dengan isian bakso kecil di dalamnya",
+        thumbnail:
+          "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
+        media: [
+          {
+            type: "image",
+            url: "https://ik.imagekit.io/j4eizgagj/Cadbury%20Dairy%20Milk%20Cokelat%20Buy%202%20Get%201.jpg?updatedAt=1738334778465",
+            caption: "Bakso Sapi Beranak",
+            thumbnail:
+              "https://ik.imagekit.io/j4eizgagj/thumbnail(1).png?updatedAt=1746462333512",
+          },
+        ],
+      },
+    ],
+    isNewArrival: false,
+    stock: 75,
+    unit: "mangkok",
+    description: "Bakso daging sapi pilihan dengan kuah gurih dan mie",
+  },
 ];
