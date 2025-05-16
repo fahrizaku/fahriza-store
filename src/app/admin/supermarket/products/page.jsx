@@ -72,7 +72,7 @@ export default function AdminProductsPage() {
           </p>
         </div>
         <Link
-          href="/admin/products/add"
+          href="/admin/supermarket/products/add"
           className="inline-flex items-center bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition"
         >
           <PlusCircle className="w-5 h-5 mr-2" />
@@ -203,7 +203,7 @@ export default function AdminProductsPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                       <Link
-                        href={`/admin/products/edit/${product.id}`}
+                        href={`/admin/supermarket/products/edit/${product.id}`}
                         className="text-purple-600 hover:text-purple-900 inline-flex items-center mr-3"
                       >
                         <Edit className="w-4 h-4 mr-1" /> Edit

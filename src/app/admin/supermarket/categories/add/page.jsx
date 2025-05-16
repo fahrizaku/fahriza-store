@@ -42,7 +42,7 @@ export default function AddCategoryPage() {
 
       // Redirect setelah 2 detik
       setTimeout(() => {
-        router.push("/admin/categories");
+        router.push("/admin/supermarket/categories");
       }, 2000);
     } catch (error) {
       console.error("Error adding category:", error);
@@ -56,7 +56,7 @@ export default function AddCategoryPage() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="mb-6">
         <Link
-          href="/admin/categories"
+          href="/admin/supermarket/categories"
           className="inline-flex items-center text-purple-600 hover:text-purple-700"
         >
           <ArrowLeft className="w-4 h-4 mr-1" /> Kembali ke Daftar Kategori

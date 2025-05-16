@@ -18,10 +18,10 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
 
   const navigation = [
-    { name: "Dashboard", href: "/admin", icon: BarChart3 },
-    { name: "Produk", href: "/admin/products", icon: ShoppingCart },
-    { name: "Kategori", href: "/admin/categories", icon: Tag },
-    { name: "Toko", href: "/supermarket/products", icon: Home },
+    { name: "Dashboard", href: "/admin/supermarket", icon: BarChart3 },
+    { name: "Produk", href: "/admin/supermarket/products", icon: ShoppingCart },
+    { name: "Kategori", href: "/admin/supermarket/categories", icon: Tag },
+    { name: "Toko", href: "/supermarket/supermarket/products", icon: Home },
   ];
 
   const isActive = (path) => {
