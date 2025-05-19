@@ -10,7 +10,6 @@ import {
   Home,
   BarChart3,
   Users,
-  Settings,
 } from "lucide-react";
 
 export default function AdminLayout({ children }) {
